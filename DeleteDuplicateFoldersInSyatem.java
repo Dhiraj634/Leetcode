@@ -1,7 +1,11 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 class Solution {
@@ -38,18 +42,24 @@ class Solution {
 		}
 	}
 	private String searchDuplicateStructure(Node root, HashMap<String, Boolean> duplicateStructure){
-		StringBuilder sb = new StringBuilder();
+
+		List<Node> children = new ArrayList<>();
 		for(Node node: root.next.values()){
+			children.add(node);
+		}
+		Collections.sort(children, Comparator.comparing(a -> a.val));
+		ArrayList<String> str = new ArrayList<>();
+		for(Node node: children){
 			String subStructure = searchDuplicateStructure(node, duplicateStructure);
 			if(subStructure.length() > 0 && duplicateStructure.containsKey(subStructure)){
 				duplicateStructure.put(subStructure, true);
 			}else{
 				duplicateStructure.put(subStructure, false);
 			}
-			sb.append(subStructure + node.val);
+			str.add(subStructure + node.val);
 		}
-		root.dirStructure = sb.toString();
-		return sb.toString();
+		root.dirStructure = str.stream().collect(Collectors.joining("-"));
+		return root.dirStructure;
 	}
 	private void createStructure(Node root, List<String> str){
 		for(String st:str){
