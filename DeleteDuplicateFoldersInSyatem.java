@@ -43,11 +43,8 @@ class Solution {
 	}
 	private String searchDuplicateStructure(Node root, HashMap<String, Boolean> duplicateStructure){
 
-		List<Node> children = new ArrayList<>();
-		for(Node node: root.next.values()){
-			children.add(node);
-		}
-		Collections.sort(children, Comparator.comparing(a -> a.val));
+		List<Node> children = new ArrayList<>(root.next.values());
+		children.sort(Comparator.comparing(a -> a.val));
 		ArrayList<String> str = new ArrayList<>();
 		for(Node node: children){
 			String subStructure = searchDuplicateStructure(node, duplicateStructure);
@@ -58,7 +55,7 @@ class Solution {
 			}
 			str.add(subStructure + node.val);
 		}
-		root.dirStructure = str.stream().collect(Collectors.joining("-"));
+		root.dirStructure = str.stream().map(string -> "("+string+")").collect(Collectors.joining("-"));
 		return root.dirStructure;
 	}
 	private void createStructure(Node root, List<String> str){
