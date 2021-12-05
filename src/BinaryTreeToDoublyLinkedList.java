@@ -15,16 +15,15 @@ public class BinaryTreeToDoublyLinkedList {
 		return ans;
 	}
 
-	private Node inOrderTraversal(Node root){
+	private void inOrderTraversal(Node root){
 		if(root == null)
-			return ans;
+			return;
 		Node currNode = new Node(root.data);
 		inOrderTraversal(root.left);
 		ans.right = currNode;
 		currNode.left = ans;
 		ans = ans.right;
 		inOrderTraversal(root.right);
-		return ans;
 
 	}
 }
