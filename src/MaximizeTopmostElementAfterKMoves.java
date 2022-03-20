@@ -9,22 +9,25 @@ public class MaximizeTopmostElementAfterKMoves {
             else return -1;
         }
         if(k > n){
-            return Arrays.stream(nums).max().getAsInt();
-        }else if(k < n){
-            PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b-a);
-            for(int i=0;i<k-1;i++){
-                pq.add(nums[i]);
+            int max = -1;
+            for(int i=0;i<n;i++){
+                max = Math.max(nums[i], max);
             }
-            int max = pq.size() ==0 ? -1 : pq.peek();
+            return max;
+        }else if(k < n){
+            int max = -1;
+            for(int i=0;i<k-1;i++){
+                max = Math.max(nums[i], max);
+            }
             max = Math.max(max, nums[k]);
             return max;
 
         }else{
-            PriorityQueue<Integer> pq = new PriorityQueue<>((a,b) -> b-a);
+            int max = -1;
             for(int i=0;i<k-1;i++){
-                pq.add(nums[i]);
+                max = Math.max(nums[i], max);
             }
-            return pq.peek();
+            return max;
         }
     }
 }
